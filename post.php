@@ -1,3 +1,22 @@
+<?php
+function getPosts(){
+    $postsJson = file_get_contents('./data/posts.json');
+    $posts = json_decode($postsJson, true);
+    return $posts;
+}
+
+function getPostContent($postID){
+    $postContent=file_get_contents('./data/posts/'.$postID.'.txt');
+
+    return $postContent;
+}
+
+$postID = $_GET['id'];
+$posts = getPosts();
+$postData = $posts[$postID];
+$postContent = getPostContent($postID);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,48 +46,34 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item px-lg-4 active"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <section class="page-section clearfix">
-            <div class="container">
-                <div class="intro">
-                    <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="assets/img/intro.jpg" alt="..." />
-                    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-                        <h2 class="section-heading mb-4">
-                            <span class="section-heading-upper">Our Environment Is</span>
-                            <span class="section-heading-lower">Worth Protecting</span>
-                        </h2>
-                        <p class="mb-3">EcoTrack is a comprehensive sustainability and eco-consciousness app designed to empower users to make environmentally-friendly choices in their daily lives. It provides a wealth of information, tools, and resources to assist individuals in reducing their carbon footprint and living more sustainably.</p>
-                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">Visit Us Today!</a></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="page-section cta">
+        <section class="bg-faded">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-9 mx-auto">
-                        <div class="cta-inner bg-faded text-center rounded">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="bg-faded p-5 rounded">
+                        <img class="img-fluid rounded" style="width: 100%; max-height: 300px;" src="<?= $postData['img'] ?>" alt="<?= $postData['title'] ?>" />
                             <h2 class="section-heading mb-4">
-                                <span class="section-heading-upper">Our Promise</span>
-                                <span class="section-heading-lower">To You</span>
+                                <span class="section-heading-lower"><?= $postData['title'] ?></span>
+                                <span class="section-heading-upper">Posted at: <?= $postData['datetime'] ?> EST</span>
                             </h2>
-                            <p class="mb-0">When you walk into our shop to start your day, we are dedicated to providing you with friendly service, a welcoming atmosphere, and above all else, excellent products made with the highest quality ingredients. If you are not satisfied, please let us know and we will do whatever we can to make things right!</p>
+                            <?= $postContent ?>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="text-center">
+                <a href="posts.php" class="text-center"><button class="btn btn-primary">Back to posts</button></a>
+                <br/><br/>
             </div>
         </section>
         <footer class="footer text-faded text-center py-5">
             <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
         </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>
