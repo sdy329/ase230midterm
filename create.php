@@ -74,7 +74,7 @@
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-xl">Create Profile</button>
+                            <button type="submit" class="btn btn-primary btn-xl"><strong>Create a User</strong></button>
                         </div>
                     </form>
                 </div>

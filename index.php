@@ -40,7 +40,7 @@
             <!-- Create User Button -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="create.php">Create a User</a>
+                    <a class="btn btn-primary" href="create.php"><strong>Create a User</strong></a>
                 </li>
             </div>
         </div>
