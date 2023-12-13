@@ -52,7 +52,7 @@
         <div class="intro">
             <h2 class="section-heading text-center mb-4">
                 <span class="section-heading-upper">Join Us!</span>
-                <span class="section-heading-lower">Create Your Profile</span>
+                <span class="section-heading-lower"><strong>Create Your Profile</strong></span>
             </h2>
             <div class="row justify-content-center">
                 <div class="col-lg-6">
