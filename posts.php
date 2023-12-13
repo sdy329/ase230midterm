@@ -54,17 +54,30 @@ function generateCards(){
         </header>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-            <div class="container">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="community.php">Community</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="community.php">Polls</a></li>
+                </ul>
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.php">EcoTrack</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
-                        <li class="nav-item px-lg-4 active"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
-                    </ul>
-                </div>
             </div>
-        </nav>
+
+            <!-- Navbar toggler for smaller screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Create User Button -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <li class="nav-item">
+                    <button class="btn btn-primary">Create a User</button>
+                </li>
+            </div>
+        </div>
+    </nav>
         <section class="page-section clearfix">
             <div class="container-fluid">
                 <?php generateCards(); ?>
