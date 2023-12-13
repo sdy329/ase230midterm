@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
+    <h1 class="site-heading text-center text-faded d-none d-lg-block">
             <span class="site-heading-upper text-primary mb-3">Protecting the environment together</span>
             <span class="site-heading-lower">EcoTrack</span>
         </h1>
@@ -45,22 +45,45 @@
             </div>
         </div>
     </nav>
+
     <!-- Middle Section-->
-    <section class="page-section clearfix">
-        <div class="container">
-            <div class="intro">
-                <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="assets/img/intro.jpg" alt="..." />
-                <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-                    <h2 class="section-heading mb-4">
-                        <span class="section-heading-upper">Our Environment Is</span>
-                        <span class="section-heading-lower">Worth Protecting</span>
-                    </h2>
-                    <p class="mb-3">EcoTrack is a comprehensive sustainability and eco-consciousness app designed to empower users to make environmentally-friendly choices in their daily lives. It provides a wealth of information, tools, and resources to assist individuals in reducing their carbon footprint and living more sustainably.</p>
-                    <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">Visit Us Today!</a></div>
+    <section class="page-section clearfix" id="createUser">
+    <div class="container">
+        <div class="intro">
+            <h2 class="section-heading text-center mb-4">
+                <span class="section-heading-upper">Join Us!</span>
+                <span class="section-heading-lower">Create Your Profile</span>
+            </h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <form action="process_user.php" method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-xl">Create Profile</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+    <!-- Middle-To-End Section-->
     <section class="page-section cta">
         <div class="container">
             <div class="row">
@@ -76,6 +99,7 @@
             </div>
         </div>
     </section>
+
     <footer class="footer text-faded text-center py-5">
         <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
     </footer>

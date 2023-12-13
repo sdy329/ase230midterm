@@ -47,7 +47,6 @@ $postContent = getPostContent($postID);
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="community.php">Community</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="polls.php">Polls</a></li>
                 </ul>
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.php">EcoTrack</a>
             </div>
@@ -60,7 +59,7 @@ $postContent = getPostContent($postID);
             <!-- Create User Button -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <li class="nav-item">
-                    <button class="btn btn-primary">Create a User</button>
+                <a class="btn btn-primary" href="create.php">Create a User</a>
                 </li>
             </div>
         </div>
