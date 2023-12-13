@@ -15,6 +15,16 @@ $postID = $_GET['id'];
 $posts = getPosts();
 $postData = $posts[$postID];
 $postContent = getPostContent($postID);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['title']; // Retrieve the post title from the form
+    $content = $_POST['content']; // Retrieve the post content from the form
+    $imagePath = $_POST['image']; // Retrieve the image path from the form
+
+    createPost($title, $content, $imagePath);
+    // Redirect to the posts page or do any necessary actions after creating the post
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +95,7 @@ $postContent = getPostContent($postID);
                 <br/><br/>
             </div>
         </section>
+        
         <footer class="footer text-faded text-center py-5">
             <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
         </footer>

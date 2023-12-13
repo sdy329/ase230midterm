@@ -77,11 +77,25 @@ function generateCards(){
             </div>
         </div>
     </nav>
+    <br>
+    <!-- Create Post Button -->
+    <div class="text-center">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal"><Strong>Create Post</Strong></button>
+            </div>
+
+        <!-- Create Post Modal -->
+            <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+            <!-- Modal content as provided earlier -->
+            </div>
+
+        <!-- Post Cards -->
         <section class="page-section clearfix">
             <div class="container-fluid">
                 <?php generateCards(); ?>
             </div>
         </section>
+
+        <!-- Footer -->
         <footer class="footer text-faded text-center py-5">
             <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
         </footer>
