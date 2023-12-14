@@ -1,39 +1,3 @@
-<?php
-function getPosts(){
-    $postsJson = file_get_contents('./data/posts.json');
-    $posts = json_decode($postsJson, true);
-    return $posts;
-}
-
-function generateCards(){
-    $posts = getPosts();
-    $counter = 0;
-
-    foreach($posts as $postID => $post){
-        if ($counter % 3 == 0) echo '<div class="row row-cols-1 row-cols-md-3 g-3">';
-
-        echo '<div class="col mb-3">
-        <div class="card">
-            <img class="card-img-top" style="width: 100%; max-height: 250px;" src="./'.$post['img'].'" alt="'.$post['title'].' Image">
-            <div class="card-body">
-                <h5 class="card-title">'.$post['title'].'</h5>
-                <p class="card-text"><small class="text-muted">Posted: '.$post['datetime'].' EST</small></p>
-                <div class="btn-group mb-2" role="group" aria-label="Post Actions">
-                    <a href="post.php?id='.$postID.'"><button class="btn btn-primary">View</button></a>&nbsp;&nbsp;
-                    <a href="admin/edit.php?id='.$postID.'"><button class="btn btn-warning">Edit</button></a>&nbsp;&nbsp;
-                    <a href="admin/delete.php?id='.$postID.'"><button class="btn btn-danger">Delete</button></a>
-                </div>
-            </div>
-        </div>
-    </div>';
-        $counter++;
-
-        if ($counter % 3 == 0) echo '</div>';
-    }
-    if ($counter % 3 != 0) echo '</div>';
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +5,7 @@ function generateCards(){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>EcoTrack</title>
+    <title>EcoTrack - Make a Post</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -56,7 +20,6 @@ function generateCards(){
             <span class="site-heading-lower">EcoTrack</span>
         </h1>
     </header>
-
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
         <div class="container">
@@ -68,45 +31,58 @@ function generateCards(){
                 </ul>
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.php">EcoTrack</a>
             </div>
-
             <!-- Navbar toggler for smaller screens -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <!-- Create User Button -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="create.php"><strong>Create a User</strong></a>
+                    <a class="btn btn-primary" href="create.php">Create a User</a>
                 </li>
             </div>
         </div>
     </nav>
 
-    <br>
-
-    <!-- Create Post Button -->
-    <div class="text-center">
-    <button class="btn btn-primary" onclick="window.location.href='createpost.php'"><strong>Create Post</strong></button>
-    </div>
-
-    <!-- Create Post Modal -->
-    <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
-        <!-- Modal content as provided earlier -->
-    </div>
-
-    <!-- Post Cards -->
-    <section class="page-section clearfix">
-        <div class="container-fluid">
-            <?php generateCards(); ?>
+    <!-- Make a Post Section -->
+    <section class="page-section clearfix" id="makePost">
+        <div class="container">
+            <div class="intro">
+                <h2 class="section-heading text-center mb-4">
+                    <span class="section-heading-upper">Share Your Thoughts!</span>
+                    <span class="section-heading-lower"><strong>Make a Post</strong></span>
+                </h2>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <form action="process_post.php" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="postTitle" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="postTitle" name="postTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="postContent" class="form-label">Content</label>
+                                <textarea class="form-control" id="postContent" name="postContent" rows="5" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="postImage" class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" id="postImage" name="postImage">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-xl"><strong>Post</strong></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0 small">Copyright &copy; EcoTrack 2023</p>
-        </div>
+        <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
     </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
 </body>
 </html>
