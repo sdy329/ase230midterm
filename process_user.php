@@ -1,7 +1,7 @@
 <?php
 // Database configuration
 $host = '';
-$dbName = '';
+$dbName = 'ecotrack';
 $username = '';
 $password = '';
 

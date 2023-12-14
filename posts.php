@@ -13,15 +13,19 @@ function generateCards(){
         if ($counter % 3 == 0) echo '<div class="row row-cols-1 row-cols-md-3 g-3">';
 
         echo '<div class="col mb-3">
-                <div class="card">
-                    <img class="card-img-top" style="width: 100%; max-height: 250px;" src="./'.$post['img'].'" alt="'.$post['title'].' Image">
-                    <div class="card-body">
-                        <h5 class="card-title">'.$post['title'].'</h5>
-                        <p class="card-text"><small class="text-muted">Posted: '.$post['datetime'].' EST</small></p>
-                        <a href="post.php?id='.$postID.'"><button class="btn btn-primary">View</button></a>
-                    </div>
+        <div class="card">
+            <img class="card-img-top" style="width: 100%; max-height: 250px;" src="./'.$post['img'].'" alt="'.$post['title'].' Image">
+            <div class="card-body">
+                <h5 class="card-title">'.$post['title'].'</h5>
+                <p class="card-text"><small class="text-muted">Posted: '.$post['datetime'].' EST</small></p>
+                <div class="btn-group mb-2" role="group" aria-label="Post Actions">
+                    <a href="post.php?id='.$postID.'"><button class="btn btn-primary">View</button></a>&nbsp;&nbsp;
+                    <a href="admin/edit.php?id='.$postID.'"><button class="btn btn-warning">Edit</button></a>&nbsp;&nbsp;
+                    <a href="admin/delete.php?id='.$postID.'"><button class="btn btn-danger">Delete</button></a>
                 </div>
-            </div>';
+            </div>
+        </div>
+    </div>';
         $counter++;
 
         if ($counter % 3 == 0) echo '</div>';
