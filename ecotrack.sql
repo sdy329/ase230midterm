@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2023 at 12:49 AM
+-- Generation Time: Dec 15, 2023 at 01:08 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,6 +30,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `admins` (
   `userID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`userID`) VALUES
+(21);
 
 -- --------------------------------------------------------
 
@@ -106,7 +113,7 @@ CREATE TABLE `users` (
   `ID` int(10) UNSIGNED NOT NULL,
   `username` varchar(48) NOT NULL,
   `email` varchar(254) NOT NULL,
-  `password` varchar(32) NOT NULL
+  `password` varchar(254) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -116,7 +123,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`ID`, `username`, `email`, `password`) VALUES
 (1, 'koalafan22', 'koalafan22@gmail.com', 'testing123'),
 (2, 'ecoenthusiast45', 'ecoenthusiast45@gmail.com', 'ecoiscool'),
-(3, 'prostheticss', 'prostheticss@gmail.com', 'prostheticss');
+(3, 'prostheticss', 'prostheticss@gmail.com', 'prostheticss'),
+(21, 'sdy329', 'sdy329@gmail.com', '$2y$10$Ob6tjimlH6rPC1iwYCQJeOwXG0RdOR0fNQyS/8EEcOThBfJcnQRbO'),
+(22, 'test', 'test@test.com', '$2y$10$wzZvgN2ymlryaGdKNjUz3uBehjPMIpoVsmiHmbGXCGo/OobxveZsy');
 
 --
 -- Indexes for dumped tables
@@ -171,7 +180,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables

@@ -1,3 +1,28 @@
+<?php
+require_once('global.php');
+if(count($_POST) > 0){
+    if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        if(query('SELECT * FROM users WHERE username = ?', [$username])->fetch()){
+            
+        } elseif(query('SELECT * FROM users WHERE email = ?', [$email])->fetch()){
+
+        } else{
+            query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [$username, $email, $password]);
+
+            $ID = query('SELECT ID FROM users WHERE username = ?', [$username])->fetch()['ID'];
+            $_SESSION['id'] = $ID;
+            $_SESSION['admin'] = false;
+            header('Location: index.php');
+        }
+    } else echo 'Not all fields are filled out';
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,36 +52,43 @@
                 <ul class="navbar-nav">
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="community.php">Community</a></li>
                 </ul>
-                <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.php">EcoTrack</a>
             </div>
 
-            <!-- Navbar toggler for smaller screens -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Create User Button -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <li class="nav-item">
-                    <a class="btn btn-primary" href="create.php">Create a User</a>
-                </li>
-            </div>
+            <?php if(isset($_SESSION['id'])){
+                echo '
+                <div class="justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="account.php">Account</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="signout.php">Sign Out</a></li>
+                    ';
+                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="admin/index.php">Admin</a></li>';
+                echo '</ul>
+                </div>';
+            } else {
+                echo '
+            <div class="justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="signin.php">Sign In</a></li>
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="register.php">Register</a></li>
+            </ul>
+            </div>';
+            }
+            ?>
         </div>
     </nav>
 
     <!-- Middle Section-->
-    <section class="page-section clearfix" id="createUser">
+    <section class="page-section cta" id="createUser">
     <div class="container">
-        <div class="intro">
+        <div class="intro cta-inner bg-faded text-center rounded">
             <h2 class="section-heading text-center mb-4">
                 <span class="section-heading-upper">Join Us!</span>
                 <span class="section-heading-lower"><strong>Create Your Profile</strong></span>
             </h2>
             <div class="row justify-content-center">
                 <div class="col-lg-6">
-                    <form action="process_user.php" method="POST">
+                    <form method="POST">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
@@ -69,10 +101,6 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                        </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-xl"><strong>Create a User</strong></button>
                         </div>
@@ -82,23 +110,6 @@
         </div>
     </div>
 </section>
-
-    <!-- Middle-To-End Section-->
-    <section class="page-section cta">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-9 mx-auto">
-                    <div class="cta-inner bg-faded text-center rounded">
-                        <h2 class="section-heading mb-4">
-                            <span class="section-heading-upper">Our Promise</span>
-                            <span class="section-heading-lower">To You</span>
-                        </h2>
-                        <p class="mb-0">When you walk into our shop to start your day, we are dedicated to providing you with friendly service, a welcoming atmosphere, and above all else, excellent products made with the highest quality ingredients. If you are not satisfied, please let us know and we will do whatever we can to make things right!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <footer class="footer text-faded text-center py-5">
         <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>

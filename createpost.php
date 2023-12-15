@@ -27,20 +27,26 @@
                 <ul class="navbar-nav">
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="community.php">Community</a></li>
                 </ul>
-                <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.php">EcoTrack</a>
             </div>
-            <!-- Navbar toggler for smaller screens -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Create User Button -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <li class="nav-item">
-                    <a class="btn btn-primary" href="create.php">Create a User</a>
-                </li>
-            </div>
+
+            <?php if(isset($_SESSION['id'])){
+                echo '
+                <div class="justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="account.php">Account</a></li>
+                </ul>
+                </div>';
+            } else {
+                echo '
+            <div class="justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="signin.php">Sign In</a></li>
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="register.php">Register</a></li>
+            </ul>
+            </div>';
+            }
+            ?>
         </div>
     </nav>
 

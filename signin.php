@@ -1,36 +1,29 @@
 <?php
 require_once('global.php');
-function getPosts(){
-    $postsJson = file_get_contents('./data/posts.json');
-    $posts = json_decode($postsJson, true);
-    return $posts;
+if(count($_POST) > 0){
+    if(isset($_POST['password'][0]) && isset($_POST['username'][0])){
+
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        if(query('SELECT ID FROM users WHERE username = ?', [$username])->fetch()){
+            $query_password = query('SELECT password FROM users WHERE username = ?', [$username])->fetch()['password'];
+
+            if(password_verify($password, $query_password)){
+                $ID = query('SELECT ID FROM users WHERE username = ?', [$username])->fetch()['ID'];
+                $_SESSION['id'] = $ID;
+                if(query('SELECT userID FROM admins WHERE userID = ?', [$ID])->fetch()) $_SESSION['admin'] = true;
+                else $_SESSION['admin'] = false;
+                header('Location: index.php');
+            } else {
+                echo 'wrong password';
+            }
+        } else {
+            echo 'wrong username';
+        }
+
+    } else echo 'Not all fields are filled out';
 }
-
-function generateCards(){
-    $posts = getPosts();
-    $counter = 0;
-
-    foreach($posts as $postID => $post){
-        if ($counter % 3 == 0) echo '<div class="row row-cols-1 row-cols-md-3 g-3">';
-
-        echo '<div class="col mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">'.$post['title'].'</h5>
-                <p class="card-text"><small class="text-muted">Posted: '.$post['datetime'].' EST</small></p>
-                <div class="btn-group mb-2" role="group" aria-label="Post Actions">
-                    <a href="post.php?id='.$postID.'"><button class="btn btn-primary">View</button></a>
-                </div>
-            </div>
-        </div>
-    </div>';
-        $counter++;
-
-        if ($counter % 3 == 0) echo '</div>';
-    }
-    if ($counter % 3 != 0) echo '</div>';
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -50,12 +43,11 @@ function generateCards(){
 </head>
 <body>
     <header>
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
+    <h1 class="site-heading text-center text-faded d-none d-lg-block">
             <span class="site-heading-upper text-primary mb-3">Protecting the environment together</span>
             <span class="site-heading-lower">EcoTrack</span>
         </h1>
     </header>
-
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
         <div class="container">
@@ -89,25 +81,40 @@ function generateCards(){
         </div>
     </nav>
 
-    <br>
-
-    <?php if(isset($_SESSION['id'])){
-        echo'
-    <div class="text-center">
-        <a href="createpost.php"><button class="btn btn-primary">Create Post</button></a>
-    </div>';
-    }?>
-
-    <section class="page-section clearfix">
-        <div class="container-fluid">
-            <?php generateCards(); ?>
+    <!-- Middle Section-->
+    <section class="page-section cta" id="createUser">
+    <div class="container">
+        <div class="intro cta-inner bg-faded text-center rounded">
+            <h2 class="section-heading text-center mb-4">
+                <span class="section-heading-lower"><strong>Sign In</strong></span>
+            </h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-xl"><strong>Sign In</strong></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0 small">Copyright &copy; EcoTrack 2023</p>
-        </div>
+        <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
     </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+require_once('global.php');
 function getPosts(){
     $postsJson = file_get_contents('./data/posts.json');
     $posts = json_decode($postsJson, true);
@@ -56,22 +57,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <ul class="navbar-nav">
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="posts.php">Posts</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="community.php">Community</a></li>
                 </ul>
-                <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.php">EcoTrack</a>
             </div>
 
-            <!-- Navbar toggler for smaller screens -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Create User Button -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <li class="nav-item">
-                <a class="btn btn-primary" href="create.php"><strong>Create a User</strong></a>
-                </li>
-            </div>
+            <?php if(isset($_SESSION['id'])){
+                echo '
+                <div class="justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="account.php">Account</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="signout.php">Sign Out</a></li>
+                    ';
+                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="admin/index.php">Admin</a></li>';
+                echo '</ul>
+                </div>';
+            } else {
+                echo '
+            <div class="justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="signin.php">Sign In</a></li>
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="register.php">Register</a></li>
+            </ul>
+            </div>';
+            }
+            ?>
         </div>
     </nav>
 
@@ -86,6 +94,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="section-heading-upper">Posted at: <?= $postData['datetime'] ?> EST</span>
                             </h2>
                             <?= $postContent ?>
+                            <?php if(isset($_SESSION['id'])){
+                echo 'Make a comment goes here';
+            } else {
+                echo 'Sign in or Register to make a comment goes here';
+            }?>
+            <br/>
+
+            <h2> Comments Here </h2> <br/>
                         </div>
                     </div>
                 </div>

@@ -11027,3 +11027,7 @@ p {
 .address strong {
   font-size: 1.2rem;
 }
+
+.register {
+  background-color: #31d2f2;
+}
