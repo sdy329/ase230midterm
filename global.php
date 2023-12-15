@@ -39,3 +39,23 @@ function getAllComments(){
     $comments = query('SELECT * FROM comments', [])->fetchAll();
     return $comments;
 }
+
+function getComment($id){
+    $comment = query('SELECT * FROM comments WHERE ID = ?', [$id])->fetch();
+    return $comment;
+}
+
+function getUsers(){
+    $users = query('SELECT * FROM users', [])->fetchAll();
+    return $users;
+}
+
+function getUser($id){
+    $user = query('SELECT * FROM users WHERE ID = ?', [$id])->fetch();
+    return $user;
+}
+
+function getAdmins(){
+    $admins = query('SELECT * FROM admins', [])->fetchAll();
+    return $admins;
+}

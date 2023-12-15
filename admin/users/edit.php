@@ -1,6 +1,13 @@
 <?php
 require_once('../../global.php');
-$posts = getPosts();
+$user = getUser($_GET['id']);
+
+if(count($_POST) > 0){
+    if(isset($_POST['username']) && isset($_POST['email'])){
+        query('UPDATE users SET username = ?, email = ? WHERE ID = ?', [$_POST['username'], $_POST['email'], $_POST['id']]);
+        header('Location: detail.php?id='.$_POST['id']);
+    } else echo 'Not all fields are filled out';
+}
 
 if($_SESSION['admin'] != true){
     header('Location: ../../index.php');
@@ -68,28 +75,25 @@ if($_SESSION['admin'] != true){
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <br/>
-                    <h1>Admin Panel</h1>
+                    <h1>Edit User</h1>
                     <hr/>
-                    <table class="mb-4 table table-primary">
-                        <tr>
-                            <th>Post</th>
-                            <th>Author</th>
-                            <th>Details</th>
-                        </tr>
-                        <?php foreach($posts as $post) { 
-                            $post = getPost($post['ID']);
-                            $username = getAuthor($post['userID']);
-
-                            echo '<tr>
-                                <td>' . $post['title'] . '</td>
-                                <td>' . $username . '</td>
-                                <td><a href="detail.php?id='.$post['ID'].'">Click Here</a></td>
-                            </tr>';
-                        }?>
-                    </table>
-                    <br/>
-                    <a href="../index.php"><button class="btn btn-primary">Back</button></a>
-                    <br/><br/>
+                    <form method="POST">
+                        <div class="text-center">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" value="<?=$user['username']?>" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" value="<?=$user['email']?>" required/>
+                            </div>
+                            <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+                            <button type="submit" class="btn btn-primary btn-xl"><strong>Edit</strong></button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="detail.php?id=<?php echo $comment['ID'] ?>" class="btn btn-primary btn-xl"><strong>Cancel</strong></a>
+                            <br/><br/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

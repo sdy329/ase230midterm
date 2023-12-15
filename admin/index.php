@@ -1,5 +1,9 @@
 <?php
 require_once('../global.php');
+
+if($_SESSION['admin'] != true){
+    header('Location: ../index.php');
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,18 +1,17 @@
 <?php
-require_once('../global.php');
+require_once('../../global.php');
 if(count($_POST) > 0){
-    if(isset($_POST['id']) && $_SESSION['id'] == query('SELECT userID FROM comments WHERE ID = ?', [$_POST['id']])->fetch()['userID']){
-        query('DELETE FROM comments WHERE ID = ?', [$_POST['id']]);
-        header('Location: ../index.php');
-
-        } else echo 'Not all fields are filled out';
+    if(isset($_POST['id'])){
+        if(query('SELECT * FROM users WHERE ID = ?', [$_POST['id']])->fetch()){
+            query('INSERT INTO admins (userID) VALUES (?)', [$_POST['id']]);
+            header('Location: index.php');
+        } else echo 'User does not exist';
+    } else echo 'Not all fields are filled out';
 }
 
-if($_SESSION['id'] != query('SELECT userID FROM comments WHERE ID = ?', [$_GET['id']])->fetch()['userID'] && $_SESSION['admin'] != true){
-    header('Location: ../post/index.php?id='.$_POST['postID']);
+if($_SESSION['admin'] != true){
+    header('Location: ../../index.php');
 }
-
-$comment = getComment($_GET['id']);
 ?>
 
 <!DOCTYPE html>
@@ -23,12 +22,12 @@ $comment = getComment($_GET['id']);
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>EcoTrack</title>
-    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../../css/styles.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -74,16 +73,19 @@ $comment = getComment($_GET['id']);
     <div class="container">
         <div class="intro cta-inner bg-faded text-center rounded">
             <h2 class="section-heading text-center mb-4">
-                <span class="section-heading-lower"><strong>Are you sure you want to delete this comment?</strong></span>
+                <span class="section-heading-lower"><strong>Add An Admin</strong></span>
             </h2>
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <form method="POST">
                         <div class="text-center">
-                            <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-                            <button type="submit" class="btn btn-primary btn-xl"><strong>Delete</strong></button>
+                            <div class="mb-3">
+                                <label for="id" class="form-label">User ID</label>
+                                <input type="text" class="form-control" id="id" name="id" required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-xl"><strong>Add</strong></button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="../post/index.php?id=<?php echo $comment['postID'] ?>" class="btn btn-primary btn-xl"><strong>Cancel</strong></a>
+                            <a href="index.php" class="btn btn-primary btn-xl"><strong>Cancel</strong></a>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,6 @@
 <?php
 require_once('../../global.php');
-$posts = getPosts();
+$admins = getAdmins();
 
 if($_SESSION['admin'] != true){
     header('Location: ../../index.php');
@@ -72,22 +72,22 @@ if($_SESSION['admin'] != true){
                     <hr/>
                     <table class="mb-4 table table-primary">
                         <tr>
-                            <th>Post</th>
-                            <th>Author</th>
-                            <th>Details</th>
+                            <th>Admin ID</th>
+                            <th>Username</th>
+                            <th>Action</th>
                         </tr>
-                        <?php foreach($posts as $post) { 
-                            $post = getPost($post['ID']);
-                            $username = getAuthor($post['userID']);
+                        <?php foreach($admins as $admin) { 
+                            $username = getAuthor($admin['userID']);
 
                             echo '<tr>
-                                <td>' . $post['title'] . '</td>
+                                <td>' . $admin['userID'] . '</td>
                                 <td>' . $username . '</td>
-                                <td><a href="detail.php?id='.$post['ID'].'">Click Here</a></td>
+                                <td><a href="delete.php?id='.$admin['userID'].'">Remove Admin</a></td>
                             </tr>';
                         }?>
                     </table>
                     <br/>
+                    <a href="create.php"><button class="btn btn-primary">Add Admin</button></a>
                     <a href="../index.php"><button class="btn btn-primary">Back</button></a>
                     <br/><br/>
                 </div>

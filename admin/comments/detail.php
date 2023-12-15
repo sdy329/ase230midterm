@@ -1,6 +1,11 @@
 <?php
 require_once('../../global.php');
-$comments = getAllComments();
+$comment = getComment($_GET['id']);
+$post = getPost($comment['postID']);
+
+if($_SESSION['admin'] != true){
+    header('Location: ../../index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +71,21 @@ $comments = getAllComments();
                     <br/>
                     <h1>Details</h1>
                     <hr/>
-                    
+                    <h2>Commented On: <a href="../../post/index.php?id=<?= $post['ID'] ?>"><?= $post['title'] ?></a></h2>
+                    <br/>
+                    <h2>Comment:</h2>
+                    <p><?= $comment['comment'] ?></p>
+                    <br/>
+                    <h2>Author: <?= getAuthor($comment['userID']) ?></h2>
+                    <br/>
+                    <h2>Posted At: <?= $comment['postedDateTime'] ?> EST</h2>
+                    <br/>
+                    <h2>Actions:</h2>
+                    <a href="edit.php?id=<?= $comment['ID'] ?>"><button class="btn btn-primary">Edit</button></a>
+                    <a href="delete.php?id=<?= $comment['ID'] ?>"><button class="btn btn-primary">Delete</button></a>
+                    <a href="index.php"><button class="btn btn-primary">Back</button></a>
+                    <br/><br/>
+
                 </div>
             </div>
         </div>

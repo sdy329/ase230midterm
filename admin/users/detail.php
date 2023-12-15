@@ -1,6 +1,6 @@
 <?php
 require_once('../../global.php');
-$posts = getPosts();
+$user = getUser($_GET['id']);
 
 if($_SESSION['admin'] != true){
     header('Location: ../../index.php');
@@ -68,27 +68,20 @@ if($_SESSION['admin'] != true){
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <br/>
-                    <h1>Admin Panel</h1>
+                    <h1>Details</h1>
                     <hr/>
-                    <table class="mb-4 table table-primary">
-                        <tr>
-                            <th>Post</th>
-                            <th>Author</th>
-                            <th>Details</th>
-                        </tr>
-                        <?php foreach($posts as $post) { 
-                            $post = getPost($post['ID']);
-                            $username = getAuthor($post['userID']);
-
-                            echo '<tr>
-                                <td>' . $post['title'] . '</td>
-                                <td>' . $username . '</td>
-                                <td><a href="detail.php?id='.$post['ID'].'">Click Here</a></td>
-                            </tr>';
-                        }?>
-                    </table>
+                    <h2>User ID: <?= $user['ID'] ?></h2>
                     <br/>
-                    <a href="../index.php"><button class="btn btn-primary">Back</button></a>
+                    <h2>Username: <?= $user['username'] ?></h2>
+                    <br/>
+                    <h2>Email: <?= $user['email'] ?></h2>
+                    <br/>
+                    <h2>Admin? <?= query('SELECT * FROM admins WHERE userID = ?', [$user['ID']]) ? 'Yes' : 'No' ?></h2>
+                    <br/>
+                    <h2>Actions:</h2>
+                    <a href="edit.php?id=<?= $user['ID'] ?>"><button class="btn btn-primary">Edit</button></a>
+                    <a href="delete.php?id=<?= $user['ID'] ?>"><button class="btn btn-primary">Delete</button></a>
+                    <a href="index.php"><button class="btn btn-primary">Back</button></a>
                     <br/><br/>
                 </div>
             </div>

@@ -1,21 +1,98 @@
 <?php
-require_once('posts.php');
-$postID = $_GET['id'];
-$postData = getPost($postID);
-$postContent = getPostContent($postID);
+require_once('../../global.php');
+$post = getPost($_GET['id']);
+
+if($_SESSION['admin'] != true){
+    header('Location: ../../index.php');
+}
 ?>
 
-<h1>Post Details</h1>
-Post ID: <?= $postID ?>
-<h2>Title: <span style="font-weight:normal"><?= $postData['title'] ?></span></h2>
-<h2>Date + Time: <span style="font-weight:normal"><?= $postData['datetime'] ?></span></h2>
-<h2>Cover Image: <img  src="../../<?= $postData['img'] ?>" alt="<?php echo $postID; ?> Image" style="max-width: 200px; max-height: 200px"/></h2>
-<textarea name="postContent" readonly><?= $postContent ?></textarea>
-<br /> <br />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>EcoTrack</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../../css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h1 class="site-heading text-center text-faded d-none d-lg-block">
+            <span class="site-heading-upper text-primary mb-3">Protecting the environment together</span>
+            <span class="site-heading-lower">EcoTrack</span>
+        </h1>
+    </header>
 
-<a href="edit.php?id=<?php echo $postID; ?>"><button>Edit</button></a> &nbsp;
-<a href="delete.php?id=<?php echo $postID; ?>"><button>Delete</button></a>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../index.php">Home</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../posts.php">Posts</a></li>
+                </ul>
+            </div>
 
-<footer>
-    <br /><a href="index.php">Back to List</a>
-</footer>
+            <?php if(isset($_SESSION['id'])){
+                echo '
+                <div class="justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../account.php">Account</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../signout.php">Sign Out</a></li>
+                    ';
+                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../index.php">Admin</a></li>';
+                echo '</ul>
+                </div>';
+            } else {
+                echo '
+            <div class="justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../signin.php">Sign In</a></li>
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../register.php">Register</a></li>
+            </ul>
+            </div>';
+            }
+            ?>
+        </div>
+    </nav>
+
+    <section class="bg-faded">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <br/>
+                    <h1>Details</h1>
+                    <hr/>
+                    <h2>Title: <?= $post['title'] ?></h2>
+                    <br/>
+                    <h2>Author: <?= getAuthor($post['userID']) ?></h2>
+                    <br/>
+                    <h2>Posted At: <?= $post['postedDateTime'] ?> EST</h2>
+                    <br/>
+                    <h2>Content: </h2>
+                    <textarea readonly><?= $post['content'] ?></textarea>
+                    <h2>Actions:</h2>
+                    <a href="edit.php?id=<?= $post['ID'] ?>"><button class="btn btn-primary">Edit</button></a>
+                    <a href="delete.php?id=<?= $post['ID'] ?>"><button class="btn btn-primary">Delete</button></a>
+                    <a href="index.php"><button class="btn btn-primary">Back</button></a>
+                    <br/><br/>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer text-faded text-center py-5">
+        <div class="container">
+            <p class="m-0 small">Copyright &copy; EcoTrack 2023</p>
+        </div>
+    </footer>
+</body>
+</html>

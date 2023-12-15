@@ -18,7 +18,7 @@ function generateCommentsCards(){
                 ';
                 if(isset($_SESSION['id'])) {
                     if($_SESSION['id'] == $comment['userID'] || $_SESSION['admin'] == true){
-                        echo '<a href="../comment/delete.php?postID='.$comment['postID'].'&userID='.$comment['userID'].'"><button class="btn btn-primary">Delete</button></a>';
+                        echo '<a href="../comment/delete.php?id='.$comment['ID'].'"><button class="btn btn-primary">Delete</button></a>';
                     } 
                 }
             echo '</div>

@@ -14,7 +14,7 @@ if(count($_POST) > 0){
                 $_SESSION['id'] = $ID;
                 if(query('SELECT userID FROM admins WHERE userID = ?', [$ID])->fetch()) $_SESSION['admin'] = true;
                 else $_SESSION['admin'] = false;
-                header('Location: index.php');
+                header('Location: account/index.php?id='.$ID);
             } else {
                 echo 'wrong password';
             }

@@ -1,6 +1,10 @@
 <?php
 require_once('../../global.php');
 $comments = getAllComments();
+
+if($_SESSION['admin'] != true){
+    header('Location: ../../index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +73,7 @@ $comments = getAllComments();
                     <table class="mb-4 table table-primary">
                         <tr>
                             <th>Post</th>
+                            <th>Comment</th>
                             <th>Author</th>
                             <th>Details</th>
                         </tr>
@@ -78,11 +83,15 @@ $comments = getAllComments();
 
                             echo '<tr>
                                 <td>' . $post['title'] . '</td>
+                                <td>' . $comment['comment'] . '</td>
                                 <td>' . $username . '</td>
-                                <td><a href="detail.php?postID='.$comment['postID'].'&userID='.$comment['userID'].'">Click Here</a></td>
+                                <td><a href="detail.php?id='.$comment['ID'].'">Click Here</a></td>
                             </tr>';
                         }?>
                     </table>
+                    <br/>
+                    <a href="../index.php"><button class="btn btn-primary">Back</button></a>
+                    <br/><br/>
                 </div>
             </div>
         </div>
