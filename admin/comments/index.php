@@ -79,7 +79,7 @@ $comments = getAllComments();
                             echo '<tr>
                                 <td>' . $post['title'] . '</td>
                                 <td>' . $username . '</td>
-                                <td><a href="details.php?postID='.$comment['postID'].'&userID='.$comment['userID'].'">Click Here</a></td>
+                                <td><a href="detail.php?postID='.$comment['postID'].'&userID='.$comment['userID'].'">Click Here</a></td>
                             </tr>';
                         }?>
                     </table>

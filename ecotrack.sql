@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2023 at 01:08 AM
+-- Generation Time: Dec 15, 2023 at 07:08 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -56,9 +56,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`postID`, `userID`, `comment`, `postedDateTime`) VALUES
-(1, 3, 'Koalas are cool', '2023-11-23 18:25:39'),
-(2, 1, 'Fun fact, koalas eat bamboo', '2023-11-24 18:26:03'),
-(3, 2, 'Avocado', '2023-11-30 18:28:33');
+(3, 21, 'test', '2023-12-15 06:28:02');
 
 -- --------------------------------------------------------
 
@@ -79,29 +77,8 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`ID`, `userID`, `title`, `content`, `postedDateTime`) VALUES
-(1, 1, 'How to save the koalas', 'Hello there', '2023-11-15 18:22:02'),
-(2, 1, 'Bamboo is good for the environment', 'Woah no way this is an article', '2023-11-18 18:22:36'),
-(3, 3, 'How to grow an avocado tree', 'Plant it', '2023-11-30 18:24:30');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `savedposts`
---
-
-CREATE TABLE `savedposts` (
-  `postID` int(10) UNSIGNED NOT NULL,
-  `userID` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `savedposts`
---
-
-INSERT INTO `savedposts` (`postID`, `userID`) VALUES
-(1, 2),
-(2, 2),
-(3, 1);
+(3, 3, 'How to grow an avocado tree.  ', 'Plant it.', '2023-12-15 05:05:25'),
+(4, 21, 'How to raise a dog', 'dogs are cool', '2023-12-15 05:26:09');
 
 -- --------------------------------------------------------
 
@@ -152,13 +129,6 @@ ALTER TABLE `posts`
   ADD KEY `user` (`userID`);
 
 --
--- Indexes for table `savedposts`
---
-ALTER TABLE `savedposts`
-  ADD KEY `savedPostUser` (`userID`),
-  ADD KEY `savedPost` (`postID`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -174,7 +144,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -204,13 +174,6 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `user` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `savedposts`
---
-ALTER TABLE `savedposts`
-  ADD CONSTRAINT `savedPost` FOREIGN KEY (`postID`) REFERENCES `posts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `savedPostUser` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
