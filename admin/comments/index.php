@@ -1,5 +1,6 @@
 <?php
-require_once('../global.php');
+require_once('../../global.php');
+$comments = getAllComments();
 ?>
 
 <!DOCTYPE html>
@@ -10,12 +11,12 @@ require_once('../global.php');
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>EcoTrack</title>
-    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../../css/styles.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -30,8 +31,8 @@ require_once('../global.php');
         <div class="container">
             <div class="d-flex align-items-center">
                 <ul class="navbar-nav">
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../index.php">Home</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../posts.php">Posts</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../index.php">Home</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../posts.php">Posts</a></li>
                 </ul>
             </div>
 
@@ -39,18 +40,18 @@ require_once('../global.php');
                 echo '
                 <div class="justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../account.php">Account</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../signout.php">Sign Out</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../account.php">Account</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../signout.php">Sign Out</a></li>
                     ';
-                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Admin</a></li>';
+                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../index.php">Admin</a></li>';
                 echo '</ul>
                 </div>';
             } else {
                 echo '
             <div class="justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../signin.php">Sign In</a></li>
-                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../register.php">Register</a></li>
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../signin.php">Sign In</a></li>
+                <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../../register.php">Register</a></li>
             </ul>
             </div>';
             }
@@ -67,25 +68,20 @@ require_once('../global.php');
                     <hr/>
                     <table class="mb-4 table table-primary">
                         <tr>
-                            <th>Control Center</th>
-                            <th>Link</th>
+                            <th>Post</th>
+                            <th>Author</th>
+                            <th>Details</th>
                         </tr>
-                        <tr>
-                            <td>View Users</td>
-                            <td><a href="users">Click Here</a></td>
-                        </tr>
-                        <tr>
-                            <td>View Posts</td>
-                            <td><a href="posts">Click Here</a></td>
-                        </tr>
-                        <tr>
-                            <td>View Comments</td>
-                            <td><a href="comments">Click Here</a></td>
-                        </tr>
-                        <tr>
-                            <td>View Admins</td>
-                            <td><a href="admins">Click Here</a></td>
-                        </tr>
+                        <?php foreach($comments as $comment) { 
+                            $post = getPost($comment['postID']);
+                            $username = getAuthor($comment['userID']);
+
+                            echo '<tr>
+                                <td>' . $post['title'] . '</td>
+                                <td>' . $username . '</td>
+                                <td><a href="details.php?postID='.$comment['postID'].'&userID='.$comment['userID'].'">Click Here</a></td>
+                            </tr>';
+                        }?>
                     </table>
                 </div>
             </div>

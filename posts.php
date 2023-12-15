@@ -1,25 +1,21 @@
 <?php
 require_once('global.php');
-function getPosts(){
-    $postsJson = file_get_contents('./data/posts.json');
-    $posts = json_decode($postsJson, true);
-    return $posts;
-}
 
 function generateCards(){
     $posts = getPosts();
     $counter = 0;
 
-    foreach($posts as $postID => $post){
+    foreach($posts as $post){
         if ($counter % 3 == 0) echo '<div class="row row-cols-1 row-cols-md-3 g-3">';
 
         echo '<div class="col mb-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">'.$post['title'].'</h5>
-                <p class="card-text"><small class="text-muted">Posted: '.$post['datetime'].' EST</small></p>
+                <p class="card-text"><small class="text-muted">Posted By: '.getAuthor($post['userID']).'</small><br/>
+                <small class="text-muted">Posted At: '.$post['postedDateTime'].' EST</small></p>
                 <div class="btn-group mb-2" role="group" aria-label="Post Actions">
-                    <a href="post.php?id='.$postID.'"><button class="btn btn-primary">View</button></a>
+                    <a href="post/index.php?id='.$post['ID'].'"><button class="btn btn-primary">View</button></a>
                 </div>
             </div>
         </div>
@@ -94,7 +90,7 @@ function generateCards(){
     <?php if(isset($_SESSION['id'])){
         echo'
     <div class="text-center">
-        <a href="createpost.php"><button class="btn btn-primary">Create Post</button></a>
+        <a href="post/create.php"><button class="btn btn-primary">Create Post</button></a>
     </div>';
     }?>
 

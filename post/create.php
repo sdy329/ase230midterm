@@ -1,5 +1,24 @@
 <?php
 require_once('../global.php');
+if(count($_POST) > 0){
+    if(isset($_POST['title']) && isset($_POST['content']) && isset($_SESSION['id'])){
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $userID = $_SESSION['id'];
+        $dateTime = date('Y-m-d H:i:s');
+            
+        query('INSERT INTO posts (userID, title, content, postedDateTime) VALUES (?, ?, ?, ?)', [$userID, $title, $content, $dateTime]);
+
+        $postID = query('SELECT ID FROM `posts` WHERE userID = ? AND title = ? AND content = ? AND postedDateTime = ?', [$userID, $title, $content, $dateTime])->fetch()['ID'];
+        header('Location: index.php?id='.$postID);
+
+        } else echo 'Not all fields are filled out';
+}
+
+if(!isset($_SESSION['id'])){
+    header('Location: index.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +38,11 @@ require_once('../global.php');
 </head>
 <body>
     <header>
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
+    <h1 class="site-heading text-center text-faded d-none d-lg-block">
             <span class="site-heading-upper text-primary mb-3">Protecting the environment together</span>
             <span class="site-heading-lower">EcoTrack</span>
         </h1>
     </header>
-
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
         <div class="container">
@@ -42,7 +60,7 @@ require_once('../global.php');
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../account.php">Account</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../signout.php">Sign Out</a></li>
                     ';
-                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="index.php">Admin</a></li>';
+                if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../admin/index.php">Admin</a></li>';
                 echo '</ul>
                 </div>';
             } else {
@@ -58,44 +76,39 @@ require_once('../global.php');
         </div>
     </nav>
 
-    <section class="bg-faded">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <br/>
-                    <h1>Admin Panel</h1>
-                    <hr/>
-                    <table class="mb-4 table table-primary">
-                        <tr>
-                            <th>Control Center</th>
-                            <th>Link</th>
-                        </tr>
-                        <tr>
-                            <td>View Users</td>
-                            <td><a href="users">Click Here</a></td>
-                        </tr>
-                        <tr>
-                            <td>View Posts</td>
-                            <td><a href="posts">Click Here</a></td>
-                        </tr>
-                        <tr>
-                            <td>View Comments</td>
-                            <td><a href="comments">Click Here</a></td>
-                        </tr>
-                        <tr>
-                            <td>View Admins</td>
-                            <td><a href="admins">Click Here</a></td>
-                        </tr>
-                    </table>
+    <section class="page-section cta" id="createPost">
+    <div class="container">
+        <div class="intro cta-inner bg-faded text-center rounded">
+            <h2 class="section-heading text-center mb-4">
+                <span class="section-heading-lower"><strong>Create Your Post</strong></span>
+            </h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content</label>
+                            <textarea class="form-control" id="content" name="content" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-xl"><strong>Create Post</strong></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer class="footer text-faded text-center py-5">
-        <div class="container">
-            <p class="m-0 small">Copyright &copy; EcoTrack 2023</p>
-        </div>
+        <div class="container"><p class="m-0 small">Copyright &copy; EcoTrack 2023</p></div>
     </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
 </body>
 </html>

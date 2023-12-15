@@ -38,7 +38,7 @@ require_once('global.php');
                 echo '
                 <div class="justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="account.php">Account</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="account/index.php?id='.$_SESSION['id'].'">Account</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="signout.php">Sign Out</a></li>
                     ';
                 if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="admin/index.php">Admin</a></li>';
@@ -67,7 +67,10 @@ require_once('global.php');
                         <span class="section-heading-lower">Worth Protecting</span>
                     </h2>
                     <p class="mb-3">EcoTrack is a comprehensive sustainability and eco-consciousness app designed to empower users to make environmentally-friendly choices in their daily lives. It provides a wealth of information, tools, and resources to assist individuals in reducing their carbon footprint and living more sustainably.</p>
-                    <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="register.php">Create An Account Today!</a></div>
+                    <?php 
+                    if(!isset($_SESSION['id'])) echo '<div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="register.php">Create An Account Today!</a></div>';
+                    else echo '<div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="posts.php">View Posts Today!</a></div>';
+                    ?>
                 </div>
             </div>
         </div>

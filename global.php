@@ -19,3 +19,23 @@ function query($query, $data){
     $stmt->execute($data);
     return $stmt;
 }
+
+function getPosts(){
+    $posts = query('SELECT * FROM posts', [])->fetchAll();
+    return $posts;
+}
+
+function getAuthor($id){
+    $author = query('SELECT username FROM users WHERE ID = ?', [$id])->fetch()['username'];
+    return $author;
+}
+
+function getPost($id){
+    $post = query('SELECT * FROM posts WHERE ID = ?', [$id])->fetch();
+    return $post;
+}
+
+function getAllComments(){
+    $comments = query('SELECT * FROM comments', [])->fetchAll();
+    return $comments;
+}
