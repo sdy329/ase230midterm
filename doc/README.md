@@ -12,4 +12,5 @@
 
 ## Youtube Video
 
-- [Youtube Link]()
+- [Youtube Link](https://youtu.be/JQqfiCx5VdE)
+- `https://youtu.be/JQqfiCx5VdE`
