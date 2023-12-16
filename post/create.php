@@ -57,7 +57,7 @@ if(!isset($_SESSION['id'])){
                 echo '
                 <div class="justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../account.php">Account</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../account/index.php?id='.$_SESSION['id'].'">Account</a></li>
                     <li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../signout.php">Sign Out</a></li>
                     ';
                 if($_SESSION['admin'] == true) echo '<li class="nav-item mb-2"><a class="nav-link text-uppercase" href="../admin/index.php">Admin</a></li>';
