@@ -17,7 +17,7 @@ function generatePostsCards(){
                 <p class="card-text"><small class="text-muted">Posted By: '.getAuthor($post['userID']).'</small><br/>
                 <small class="text-muted">Posted At: '.$post['postedDateTime'].' EST</small></p>
                 <div class="btn-group mb-2" role="group" aria-label="Post Actions">
-                    <a href="post/index.php?id='.$post['ID'].'"><button class="btn btn-primary">View</button></a>
+                    <a href="../post/index.php?id='.$post['ID'].'"><button class="btn btn-primary">View</button></a>
                 </div>
             </div>
         </div>
