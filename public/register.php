@@ -8,9 +8,9 @@ if(count($_POST) > 0){
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         if(query('SELECT * FROM users WHERE username = ?', [$username])->fetch()){
-            
+            echo 'username already exists';
         } elseif(query('SELECT * FROM users WHERE email = ?', [$email])->fetch()){
-
+            echo 'email already exists';
         } else{
             query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [$username, $email, $password]);
 
